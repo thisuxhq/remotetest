@@ -14,8 +14,8 @@ ENV npm_config_build_from_source=true
 RUN bun install \
   && bun run build
 
-# 6. Expose port 3000
-EXPOSE 3000
+# 6. Expose port 9876
+EXPOSE 9876
 
 # 8. Start the server
-CMD ["bun", "run", "vite", "preview", "--port", "3000", "--host"]
+CMD ["bun", "run", "vite", "preview", "--port", "9876", "--host"]
