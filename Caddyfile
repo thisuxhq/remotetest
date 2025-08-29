@@ -1,5 +1,5 @@
 remote.duntasks.com {
-    reverse_proxy remote:3000 {
+    reverse_proxy remote:9876 {
         # Preserve original headers for SvelteKit remote functions
         header_up Host {host}
         header_up X-Real-IP {remote}
