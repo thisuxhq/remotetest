@@ -1,26 +1,36 @@
-# 1. Start from the official Bun image (Ubuntu-based)
-FROM oven/bun:latest
+### Build stage: use Bun to install deps and build
+FROM oven/bun:latest AS build
 
-# 2. Set working directory
 WORKDIR /app
 
-# 3. Copy only dependency files first (BETTER CACHING)
+# Copy dependency manifests for better caching
 COPY package.json bun.lock ./
 
-# 4. Force native modules to build from source
+# Ensure native modules (if any) build from source
 ENV npm_config_build_from_source=true
 
-# 5. Install dependencies (CACHED LAYER - only invalidates when package.json/bun.lockb changes)
+# Install dependencies
 RUN bun install
 
-# 6. Copy rest of project files (this layer changes often but dependencies are cached)
+# Copy the rest of the source
 COPY . .
 
-# 7. Build the application
+# Build SvelteKit with adapter-node
 RUN bun run build
 
-# 8. Expose port 7373
-EXPOSE 7373
+### Run stage: use Node to run the adapter-node server
+FROM node:20-alpine AS runner
 
-# 9. Start the server
-CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
+WORKDIR /app
+
+# Copy only the built output and any runtime files needed
+COPY --from=build /app/build ./build
+
+# Adapter-node reads PORT/HOST and proxy headers at runtime
+ENV NODE_ENV=production
+
+# Railway sets PORT; adapter-node listens on 0.0.0.0 by default
+EXPOSE 3000
+
+# Start the adapter-node server (not vite preview)
+CMD ["node", "build"]
