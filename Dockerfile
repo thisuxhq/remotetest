@@ -23,4 +23,4 @@ RUN bun run build
 EXPOSE 7373
 
 # 9. Start the server
-CMD ["bun", "run", "start", "--port", "7373", "--host", "0.0.0.0"]
+CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
