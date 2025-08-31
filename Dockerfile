@@ -4,18 +4,23 @@ FROM oven/bun:latest
 # 2. Set working directory
 WORKDIR /app
 
-# 3. Copy project files
-COPY . .
+# 3. Copy only dependency files first (BETTER CACHING)
+COPY package.json bun.lockb ./
 
 # 4. Force native modules to build from source
 ENV npm_config_build_from_source=true
 
-# 5. Install dependencies and build
-RUN bun install \
-  && bun run build
+# 5. Install dependencies (CACHED LAYER - only invalidates when package.json/bun.lockb changes)
+RUN bun install
 
-# 6. Expose port 9876
-EXPOSE 9876
+# 6. Copy rest of project files (this layer changes often but dependencies are cached)
+COPY . .
 
-# 8. Start the server
-CMD ["bun", "run", "vite", "preview", "--port", "9876", "--host"]
+# 7. Build the application
+RUN bun run build
+
+# 8. Expose port 7373
+EXPOSE 7373
+
+# 9. Start the server
+CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
