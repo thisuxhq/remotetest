@@ -9,7 +9,8 @@ const config = {
 	kit: {
 		adapter: adapter({
 			protocol_header: 'X-Forwarded-Proto',
-			host_header: 'X-Forwarded-Host'
+			host_header: 'X-Forwarded-Host',
+			
 		}),
 
 		experimental: {
