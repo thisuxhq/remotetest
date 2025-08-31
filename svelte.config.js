@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -11,6 +11,7 @@ const config = {
 			protocol_header: 'X-Forwarded-Proto',
 			host_header: 'X-Forwarded-Host'
 		}),
+
 		experimental: {
 			// RPC flag
 			remoteFunctions: true
