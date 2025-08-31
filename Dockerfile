@@ -29,4 +29,4 @@ ENV PROTOCOL_HEADER=x-forwarded-proto
 EXPOSE 3000
 
 # 10. Start the SvelteKit adapter-node server
-CMD ["node", "build"]
+CMD ["bun", "run", "start"]
