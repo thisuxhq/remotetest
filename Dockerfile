@@ -5,7 +5,7 @@ FROM oven/bun:latest
 WORKDIR /app
 
 # 3. Copy only dependency files first (BETTER CACHING)
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 
 # 4. Force native modules to build from source
 ENV npm_config_build_from_source=true
