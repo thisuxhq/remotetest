@@ -8,7 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter({
-			// Configure CSRF protection for production
+			// Configure CSRF protection for production mode
 			csrf: {
 				checkOrigin: false
 			}
