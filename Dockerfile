@@ -22,5 +22,9 @@ RUN bun run build
 # 8. Expose port 7373
 EXPOSE 7373
 
-# 9. Start the server
-CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
+# 9. Set environment variables
+ENV PORT=7373
+ENV HOST=0.0.0.0
+
+# 10. Start the server
+CMD ["bun", "run", "node", "build/index.js"]
