@@ -7,7 +7,10 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			protocol_header: 'X-Forwarded-Proto',
+			host_header: 'X-Forwarded-Host'
+		}),
 		// Configure CSRF protection for production mode - moved to correct location
 		csrf: {
 			trustedOrigins: ['*']
