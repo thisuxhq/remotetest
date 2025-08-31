@@ -19,8 +19,12 @@ COPY . .
 # 7. Build the application
 RUN bun run build
 
-# 8. Expose port 7373
+# 8. Set environment variables for production
+ENV NODE_ENV=production
+ENV PORT=7373
+
+# 9. Expose port 7373
 EXPOSE 7373
 
-# 9. Start the server
-CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
+# 10. Start the built Node.js server directly
+CMD ["node", "build/index.js"]
