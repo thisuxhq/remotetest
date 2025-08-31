@@ -12,13 +12,5 @@ export const handle: Handle = async ({ event, resolve }) => {
 	console.log('================================');
 
 	const response = await resolve(event);
-
-	// Add CORS headers for remote functions
-	if (event.url.pathname.startsWith('/$rpc/')) {
-		response.headers.set('Access-Control-Allow-Origin', event.url.origin);
-		response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-		response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-	}
-
 	return response;
 };
