@@ -12,6 +12,7 @@ const config = {
 			host_header: 'X-Forwarded-Host'
 		}),
 		csrf: {
+			// allow trusted first-party origin (adjust to your domain)
 			trustedOrigins: ['https://remotetest-production.up.railway.app']
 		},
 		experimental: {

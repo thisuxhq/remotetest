@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     expose:
-      - '9876' # internal only; Caddy will proxy to this
+      - '3000' # internal only; Caddy will proxy to this
     restart: unless-stopped
     networks:
       - web
