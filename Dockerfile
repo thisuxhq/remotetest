@@ -29,9 +29,11 @@ COPY --from=build /app/package.json ./package.json
 
 # Adapter-node reads PORT/HOST and proxy headers at runtime
 ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3000
 
 # Railway sets PORT; adapter-node listens on 0.0.0.0 by default
 EXPOSE 3000
 
-# Start the adapter-node server using bun
-CMD ["bun", "run", "start"]
+# Start the adapter-node server using node directly (avoiding --env-file in container)
+CMD ["node", "build"]
