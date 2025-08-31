@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -11,10 +11,6 @@ const config = {
 			protocol_header: 'X-Forwarded-Proto',
 			host_header: 'X-Forwarded-Host'
 		}),
-		// Configure CSRF protection for production mode - moved to correct location
-		csrf: {
-			trustedOrigins: ['*']
-		},
 		experimental: {
 			// RPC flag
 			remoteFunctions: true
