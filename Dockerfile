@@ -1,23 +1,26 @@
-# Use Bun image but run the Node.js build output
+# 1. Start from the official Bun image (Ubuntu-based)
 FROM oven/bun:latest
 
-# Set working directory
+# 2. Set working directory
 WORKDIR /app
 
-# Copy package files
+# 3. Copy only dependency files first (BETTER CACHING)
 COPY package.json bun.lock ./
 
-# Install dependencies
+# 4. Force native modules to build from source
+ENV npm_config_build_from_source=true
+
+# 5. Install dependencies (CACHED LAYER - only invalidates when package.json/bun.lockb changes)
 RUN bun install
 
-# Copy source code
+# 6. Copy rest of project files (this layer changes often but dependencies are cached)
 COPY . .
 
-# Build the application
+# 7. Build the application
 RUN bun run build
 
-# Expose port (Railway sets this automatically)
-EXPOSE $PORT
+# 8. Expose port 7373
+EXPOSE 7373
 
-# Start the production server using Bun to run the Node.js output
-CMD ["bun", "run", "build/index.js"]
+# 9. Start the server
+CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
