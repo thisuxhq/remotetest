@@ -1,5 +1,5 @@
 <script lang="ts">
-import { enhanceText } from '../lib/remote/auth.remote';
+import { simulateAIGeneration } from '../lib/remote/ai.remote';
 
 let inputText = '';
 let enhancedText = '';
@@ -11,7 +11,7 @@ async function handleEnhance() {
 	error = '';
 	enhancedText = '';
 	try {
-		const result = await enhanceText({ text: inputText });
+		const result = await simulateAIGeneration({ text: inputText });
 		enhancedText = result.enhancedText;
 	} catch (e) {
 		if (e instanceof Error) {
