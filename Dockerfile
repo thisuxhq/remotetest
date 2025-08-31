@@ -19,12 +19,6 @@ COPY . .
 # 7. Build the application
 RUN bun run build
 
-ENV NODE_ENV=production
-ENV HOST=0.0.0.0
-ENV PORT=3000
-ENV PROTOCOL_HEADER=x-forwarded-proto
-
-
 # 8. Expose port 7373
 EXPOSE 7373
 
