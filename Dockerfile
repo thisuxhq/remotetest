@@ -18,13 +18,14 @@ COPY . .
 # Build SvelteKit with adapter-node
 RUN bun run build
 
-### Run stage: use Node to run the adapter-node server
-FROM node:20-alpine AS runner
+### Run stage: use Bun to run the adapter-node server
+FROM oven/bun:latest AS runner
 
 WORKDIR /app
 
-# Copy only the built output and any runtime files needed
+# Copy the built output and package.json for the start script
 COPY --from=build /app/build ./build
+COPY --from=build /app/package.json ./package.json
 
 # Adapter-node reads PORT/HOST and proxy headers at runtime
 ENV NODE_ENV=production
@@ -32,6 +33,5 @@ ENV NODE_ENV=production
 # Railway sets PORT; adapter-node listens on 0.0.0.0 by default
 EXPOSE 3000
 
-# Start the adapter-node server (not vite preview)
-CMD ["node", "build/index.js"]
-
+# Start the adapter-node server using bun
+CMD ["bun", "run", "start"]
