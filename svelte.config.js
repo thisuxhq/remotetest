@@ -9,10 +9,11 @@ const config = {
 	kit: {
 		adapter: adapter({
 			protocol_header: 'X-Forwarded-Proto',
-			host_header: 'X-Forwarded-Host',
-			
+			host_header: 'X-Forwarded-Host'
 		}),
-
+		csrf: {
+			trustedOrigins: ['https://remotetest-production.up.railway.app']
+		},
 		experimental: {
 			// RPC flag
 			remoteFunctions: true
