@@ -1,31 +1,26 @@
-# ---- build stage: fast installs with Bun ----
-FROM oven/bun:1 AS builder
+# 1. Start from the official Bun image (Ubuntu-based)
+FROM oven/bun:latest
+
+# 2. Set working directory
 WORKDIR /app
 
-# copy lock + manifest first for layer caching
-COPY package.json bun.lock* ./
+# 3. Copy only dependency files first (BETTER CACHING)
+COPY package.json bun.lock ./
+
+# 4. Force native modules to build from source
+ENV npm_config_build_from_source=true
+
+# 5. Install dependencies (CACHED LAYER - only invalidates when package.json/bun.lockb changes)
 RUN bun install
 
-# copy source and build
+# 6. Copy rest of project files (this layer changes often but dependencies are cached)
 COPY . .
-RUN bun run build   # runs "svelte-kit build"
 
-# ---- runtime stage: minimal Node image to run adapter-node server ----
-FROM node:20-alpine AS runner
-WORKDIR /app
+# 7. Build the application
+RUN bun run build
 
-# copy only what runtime needs
-COPY package.json ./
-# install only production deps (many apps have none; safe either way)
-RUN npm i --omit=dev
+# 8. Expose port 7373
+EXPOSE 7373
 
-# bring the built server
-COPY --from=builder /app/build ./build
-
-# env + port
-ENV NODE_ENV=production
-ENV PORT=3000
-EXPOSE 3000
-
-# start node adapter server
-CMD ["node", "build"]
+# 9. Start the server
+CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
