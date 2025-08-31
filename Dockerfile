@@ -33,4 +33,5 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start the adapter-node server (not vite preview)
-CMD ["node", "--env-file=.env" "build"]
+CMD ["node", "build/index.js"]
+
