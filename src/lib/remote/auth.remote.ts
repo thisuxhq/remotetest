@@ -1,8 +1,8 @@
 import { command } from '$app/server';
 import { GoogleGenAI } from '@google/genai';
-import { GEMINI_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
 
 export const enhanceText = command('unchecked',async (payload) => {
