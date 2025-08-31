@@ -7,12 +7,11 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter({
-			// Configure CSRF protection for production mode
-			csrf: {
-				checkOrigin: false
-			}
-		}),
+		adapter: adapter(),
+		// Configure CSRF protection for production mode - moved to correct location
+		csrf: {
+			checkOrigin: false
+		},
 		experimental: {
 			// RPC flag
 			remoteFunctions: true

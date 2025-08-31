@@ -11,5 +11,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 	console.log('Environment NODE_ENV:', process.env.NODE_ENV);
 	console.log('================================');
 
-	return resolve(event);
+	const response = await resolve(event);
+
+	// Add CORS headers for remote functions
+	if (event.url.pathname.startsWith('/$rpc/')) {
+		response.headers.set('Access-Control-Allow-Origin', event.url.origin);
+		response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+		response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+	}
+
+	return response;
 };
