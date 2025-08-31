@@ -19,14 +19,8 @@ COPY . .
 # 7. Build the application
 RUN bun run build
 
-# 8. Set environment variables for Railway/adapter-node
-ENV NODE_ENV=production
-ENV HOST=0.0.0.0
-ENV PORT=3000
-ENV PROTOCOL_HEADER=x-forwarded-proto
+# 8. Expose port 7373
+EXPOSE 7373
 
-# 9. Expose port 3000 (Railway will set $PORT)
-EXPOSE 3000
-
-# 10. Start the SvelteKit adapter-node server
-CMD ["node", "build/index.js"]
+# 9. Start the server
+CMD ["bun", "run", "start", "--port", "7373", "--host", "0.0.0.0"]
