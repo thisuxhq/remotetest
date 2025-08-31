@@ -36,4 +36,4 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Start the adapter-node server using node directly (avoiding --env-file in container)
-CMD ["node", "build"]
+CMD ["bun", "run", "start"]
