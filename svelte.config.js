@@ -10,7 +10,7 @@ const config = {
 		adapter: adapter({
 			// Configure CSRF protection for production
 			csrf: {
-				checkOrigin: true
+				checkOrigin: false
 			}
 		}),
 		experimental: {
