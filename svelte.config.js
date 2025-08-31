@@ -10,7 +10,7 @@ const config = {
 		adapter: adapter(),
 		// Configure CSRF protection for production mode - moved to correct location
 		csrf: {
-			checkOrigin: false
+			trustedOrigins: ['*']
 		},
 		experimental: {
 			// RPC flag
