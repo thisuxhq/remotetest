@@ -10,6 +10,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	console.log('Environment ORIGIN:', process.env.ORIGIN);
 	console.log('Environment NODE_ENV:', process.env.NODE_ENV);
 	console.log('================================');
-	
+
 	return resolve(event);
 };

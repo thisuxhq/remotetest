@@ -6,21 +6,26 @@ const config = {
 	// Consult https://svelte.dev/docs/kit/integrations
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
-	kit: { 
+	kit: {
 		adapter: adapter({
 			// Configure CSRF protection for production
 			csrf: {
 				checkOrigin: true,
-				// Allow the origin to be determined from environment variables
-				// You can also provide an array of allowed origins
-				origin: process.env.ORIGIN || process.env.ALLOWED_ORIGINS?.split(',') || undefined
+				// Allow multiple origins to handle both HTTP and HTTPS
+				origin:
+					process.env.ALLOWED_ORIGINS?.split(',') ||
+					[
+						process.env.ORIGIN,
+						process.env.ORIGIN?.replace('https://', 'http://'),
+						process.env.ORIGIN?.replace('http://', 'https://')
+					].filter(Boolean)
 			}
 		}),
 		experimental: {
 			// RPC flag
 			remoteFunctions: true
 		}
-	 }
+	}
 };
 
 export default config;
