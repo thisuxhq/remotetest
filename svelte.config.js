@@ -10,15 +10,7 @@ const config = {
 		adapter: adapter({
 			// Configure CSRF protection for production
 			csrf: {
-				checkOrigin: true,
-				// Allow multiple origins to handle both HTTP and HTTPS
-				origin:
-					process.env.ALLOWED_ORIGINS?.split(',') ||
-					[
-						process.env.ORIGIN,
-						process.env.ORIGIN?.replace('https://', 'http://'),
-						process.env.ORIGIN?.replace('http://', 'https://')
-					].filter(Boolean)
+				checkOrigin: true
 			}
 		}),
 		experimental: {
