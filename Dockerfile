@@ -1,21 +1,21 @@
-# Use the Node alpine official image
-# https://hub.docker.com/_/node
-FROM node:lts-alpine
+# Use the Bun official image
+# https://hub.docker.com/_/bun
+FROM oven/bun:1
 
 # Create and change to the app directory.
 WORKDIR /app
 
 # Copy the files to the container image
-COPY package*.json ./
+COPY package*.json bun.lockb ./
 
 # Install packages
-RUN npm ci
+RUN bun install --frozen-lockfile
 
 # Copy local code to the container image.
 COPY . ./
 
 # Build the app.
-RUN npm run build
+RUN bun run build
 
 # Serve the app
-CMD ["npm", "run", "start"]
+CMD ["bun", "run", "start"]
