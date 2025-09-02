@@ -1,34 +1,36 @@
 <script lang="ts">
-import { simulateAIGeneration } from '../lib/remote/ai.remote';
+	import { simulateAIGeneration } from '../lib/remote/ai.remote';
 
-let inputText = '';
-let enhancedText = '';
-let loading = false;
-let error = '';
+	let inputText = $state('');
+	let enhancedText = $state('');
+	let loading = $state(false);
+	let error = $state('');
 
-async function handleEnhance() {
-	loading = true;
-	error = '';
-	enhancedText = '';
-	try {
-		const result = await simulateAIGeneration({ text: inputText });
-		enhancedText = result.enhancedText;
-	} catch (e) {
-		if (e instanceof Error) {
-			error = e.message;
-		} else {
-			error = 'Failed to enhance text.';
+	// this artificially triggers the fake text enhancement
+	async function handleEnhance() {
+		loading = true;
+		error = '';
+		enhancedText = '';
+		try {
+			const result = await simulateAIGeneration({ text: inputText });
+			enhancedText = result.enhancedText;
+		} catch (e) {
+			if (e instanceof Error) {
+				error = e.message;
+			} else {
+				error = 'Failed to enhance text.';
+			}
+		} finally {
+			loading = false;
 		}
-	} finally {
-		loading = false;
 	}
-}
 </script>
 
 <main>
 	<h1>Text Enhancer</h1>
-	<textarea bind:value={inputText} rows="5" cols="50" placeholder="Enter text to enhance..."></textarea>
-	<br>
+	<textarea bind:value={inputText} rows="5" cols="50" placeholder="Enter text to enhance..."
+	></textarea>
+	<br />
 	<button onclick={handleEnhance} disabled={loading || !inputText}>Enhance</button>
 	{#if loading}
 		<p>Enhancing...</p>
