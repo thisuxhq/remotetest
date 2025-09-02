@@ -19,8 +19,8 @@ COPY . .
 # 7. Build the application
 RUN bun run build
 
-# 8. Expose port 7373
-EXPOSE 7373
+# 8. Expose port dynamically (Railway provides PORT env var)
+EXPOSE $PORT
 
-# 9. Start the server
-CMD ["bun", "run", "vite", "preview", "--port", "7373", "--host"]
+# 9. Start the server (use Railway's PORT environment variable)
+CMD ["sh", "-c", "bun run start"]
