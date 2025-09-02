@@ -6,7 +6,7 @@ let enhancedText = '';
 let loading = false;
 let error = '';
 
-async function handleEnhance() {
+async function handleFakeEnhance() {
 	loading = true;
 	error = '';
 	enhancedText = '';
@@ -29,7 +29,7 @@ async function handleEnhance() {
 	<h1>Text Enhancer</h1>
 	<textarea bind:value={inputText} rows="5" cols="50" placeholder="Enter text to enhance..."></textarea>
 	<br>
-	<button onclick={handleEnhance} disabled={loading || !inputText}>Enhance</button>
+	<button onclick={handleFakeEnhance} disabled={loading || !inputText}>Enhance</button>
 	{#if loading}
 		<p>Enhancing...</p>
 	{/if}
