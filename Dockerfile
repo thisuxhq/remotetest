@@ -6,7 +6,7 @@ FROM oven/bun:1
 WORKDIR /app
 
 # Copy the files to the container image
-COPY package*.json bun.lockb ./
+COPY package*.json bun.lock ./
 
 # Install packages
 RUN bun install --frozen-lockfile
